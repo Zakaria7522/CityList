@@ -76,4 +76,38 @@ public class MainActivityTest {
         Espresso.pressBack(); //Back button
     }
 
+
+    @Test
+    public void testActivitySwitched(){
+        onView(withId(R.id.button_add)).perform(click()); //Click add button to add a city to the list
+        onView(withId(R.id.editText_name)).perform(ViewActions.typeText("Edmonton")); //Type a city name
+        onView(withId(R.id.button_confirm)).perform(click()); //Confirm the city name and add to the list
+
+        onData(anything()).inAdapterView(withId(R.id.city_list)).atPosition(0).perform(click()); //Clicks an item to go to the next activity
+        onView(withId(R.id.textView)).check(matches(isDisplayed()));  //Checks if textview is showing i.e activity is switched
+    }
+
+    @Test
+    public void testCityname(){
+        onView(withId(R.id.button_add)).perform(click()); //Click add button to add a city to the list
+        onView(withId(R.id.editText_name)).perform(ViewActions.typeText("Edmonton")); //Type a city name
+        onView(withId(R.id.button_confirm)).perform(click()); //Confirm the city name and add to the list
+
+        onData(anything()).inAdapterView(withId(R.id.city_list)).atPosition(0).perform(click()); //Clicks an item to go to the next activity
+
+        onView(withText("Edmonton")).check(matches(isDisplayed()));     //Checks if the name is consistent
+    }
+
+    @Test
+    public void testBackButton(){
+        onView(withId(R.id.button_add)).perform(click()); //Click add button to add a city to the list
+        onView(withId(R.id.editText_name)).perform(ViewActions.typeText("Edmonton")); //Type a city name
+        onView(withId(R.id.button_confirm)).perform(click()); //Confirm the city name and add to the list
+
+        onData(anything()).inAdapterView(withId(R.id.city_list)).atPosition(0).perform(click()); //Clicks an item to go to the next activity
+        onView(withId(R.id.button)).perform(click());         //Clicks the back button
+        onView(withId(R.id.city_list)).check(matches(isDisplayed()));  //Checks if the citylist is displayed
+
+
+    }
 }
